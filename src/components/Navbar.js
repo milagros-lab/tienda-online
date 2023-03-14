@@ -48,7 +48,6 @@ const Navbar = () => {
       });
       history.push("/");
     }
-    console.log(user);
   };
 
   return (

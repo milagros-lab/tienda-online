@@ -59,7 +59,6 @@ export default function SignUp() {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((auth) => {
-        console.log(auth);
         if (auth) {
           history.push("/");
         }
