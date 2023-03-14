@@ -1,77 +1,94 @@
-import React, { useContext } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import logo from "../assets/logo2.png"
-import { ShoppingCart } from '@material-ui/icons';
-import { Badge } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import StateContex from '../StateProvider';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import logo from "../assets/cuttevents.png";
+import { Badge, Button } from "@material-ui/core";
+import { ShoppingCart } from "@material-ui/icons";
+import { useStateValue } from "../StateProvider";
+import { Link, useHistory } from "react-router-dom";
+import { auth } from "../firebase";
+import { actionTypes } from "../reducer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginBottom: "7rem"
+    marginBottom: "7rem",
   },
-  AppBar: {
-    background: "whitesmoke",
-    boxShadow: "none"
+  appBar: {
+    backgroundColor: "whitesmoke",
+    boxShadow: "none",
   },
   grow: {
     flexGrow: 1,
   },
   button: {
-    marginLeft: theme.spacing(3),
+    marginLeft: theme.spacing(2),
   },
-  image: {
+  image: {    
     marginRight: "5px",
-    /* height: "5rem",  */
     width:"7rem",
     height:"5rem"
-    
-  }
+  },
 }));
 
-
-
-export default function Navbar() {
+const Navbar = () => {
   const classes = useStyles();
-  const {items} = useContext(StateContex)
-  console.log(items)
-  
+  const [{ basket, user }, dispatch] = useStateValue();
+  const history = useHistory();
+
+  const handleAuth = () => {
+    if (user) {
+      auth.signOut();
+      dispatch({
+        type: actionTypes.EMPTY_BASKET,
+        basket: [],
+      });
+      history.push("/");
+    }
+    console.log(user);
+  };
+
   return (
     <div className={classes.root}>
-      <AppBar position="fixed" className={classes.AppBar}>
+      <AppBar position='fixed' className={classes.appBar}>
         <Toolbar>
-          <Link to="/">
-            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <img src = {logo} className={classes.image} alt=""/>
+          <Link to='/'>
+            <IconButton>
+              <img
+                src={logo}
+                alt='Commerce.js'
+                height='30px'
+                className={classes.image}
+              />
             </IconButton>
-          </Link>        
-          <div className={classes.grow}/>
-          <Typography variant="h6" color='textPrimary'>
-            Welcome
+          </Link>
+
+          <div className={classes.grow} />
+          <Typography variant='h6' color='textPrimary' component='p'>
+            Hello {user ? user.email : "Guest"}
           </Typography>
           <div className={classes.button}>
-            <Link to="/signin" >
-              <Button variant='outlined'>
-                  <strong>SIGN IN</strong>
-              </Button>            
+            <Link to={!user && "/signin"}>
+              <Button onClick={handleAuth} variant='outlined'>
+                <strong>{user ? "Cerrar sesion" : "Iniciar sesion"}</strong>
+              </Button>
             </Link>
-            
-            <Link to="/checkout-page">
+
+            <Link to='/checkout-page'>
               <IconButton aria-label='show cart items' color='inherit'>
-                  <Badge badgeContent={items.length} color="secondary">
-                      <ShoppingCart fontSize='large' color='primary'/>
-                  </Badge>
+                <Badge badgeContent={basket?.length} color='secondary'>
+                  <ShoppingCart fontSize='large' color='primary' />
+                </Badge>
               </IconButton>
             </Link>
-          </div>                
+          </div>
         </Toolbar>
       </AppBar>
     </div>
   );
-}
+};
+
+export default Navbar;
