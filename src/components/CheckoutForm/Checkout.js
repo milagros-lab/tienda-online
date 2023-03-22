@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect}from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
@@ -79,26 +79,28 @@ function getStepContent(step) {
   }
 }
 
-export default function Checkout() {
+export default function Checkout({}) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [{ basket, user }, dispatch] = useStateValue();
 
   const handleNext = () => {
-    setActiveStep(activeStep + 1);  
+    setActiveStep(prev=> prev + 1);
+   
   };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
 
-  const handleEmpty = () => {
-      dispatch({
-        type: actionTypes.EMPTY_BASKET,
-        basket: [],
-      });      
-  };
-
+  useEffect(() => {
+    if(activeStep === 3){
+    dispatch({
+      type: actionTypes.EMPTY_BASKET,
+      basket: [],
+    })}    
+   }, [activeStep ])
+   
   return (
     <>
       <CssBaseline />
@@ -126,7 +128,6 @@ export default function Checkout() {
                   shipped.
                 </Typography>
                 <Button
-                  onClick={handleEmpty}
                   component={Link}
                   to='/'
                   variant='contained'
