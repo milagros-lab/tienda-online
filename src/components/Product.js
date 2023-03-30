@@ -43,7 +43,7 @@ export default function Product({
 }) {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
-  const [{ basket }, dispatch] = useStateValue();
+  const [ , dispatch] = useStateValue();
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };

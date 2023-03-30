@@ -79,10 +79,10 @@ function getStepContent(step) {
   }
 }
 
-export default function Checkout({}) {
+export default function Checkout() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
-  const [{ basket, user }, dispatch] = useStateValue();
+  const [ , dispatch] = useStateValue();
 
   const handleNext = () => {
     setActiveStep(prev=> prev + 1);
@@ -99,7 +99,7 @@ export default function Checkout({}) {
       type: actionTypes.EMPTY_BASKET,
       basket: [],
     })}    
-   }, [activeStep ])
+   }, [activeStep, dispatch])
    
   return (
     <>
