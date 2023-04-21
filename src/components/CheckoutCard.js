@@ -33,10 +33,11 @@ const useStyles = makeStyles((theme) => ({
 
 const CheckoutCard = ({ product: { id, name, image, price, rating } }) => {
   const classes = useStyles();
-  const [ dispatch] = useStateValue();
+  const [ {basket}, dispatch] = useStateValue();
 
   const removeItem = () => {
     dispatch({
+      basket,
       type: actionTypes.REMOVE_ITEM,
       id: id,
     });
