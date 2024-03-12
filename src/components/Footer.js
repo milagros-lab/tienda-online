@@ -22,16 +22,16 @@ const Footer = () => {
     <footer className={classes.footer}>
     <p>&copy; 2024 Mi Sitio Web</p>
     <nav>
-      <a href="#" className={classes.link}>
+      <a href="/" className={classes.link}>
         Inicio
       </a>
-      <a href="#" className={classes.link}>
+      <a href="/" className={classes.link}>
         Acerca de nosotros
       </a>
-      <a href="#" className={classes.link}>
+      <a href="/" className={classes.link}>
         Servicios
       </a>
-      <a href="#" className={classes.link}>
+      <a href="/" className={classes.link}>
         Contacto
       </a>
     </nav>
