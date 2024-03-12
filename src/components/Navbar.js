@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "7rem",
   },
   appBar: {
-    backgroundColor: "whitesmoke",
+    backgroundColor: "#aaaadb",
     boxShadow: "none",
   },
   grow: {

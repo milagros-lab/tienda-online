@@ -10,6 +10,7 @@ import { auth } from "./firebase";
 import Checkout from "./components/CheckoutForm/Checkout";
 import { useStateValue } from "./StateProvider";
 import { actionTypes } from "./reducer";
+import Footer from "./components/Footer";
 
 function App() {
   const [, dispatch] = useStateValue();
@@ -51,6 +52,7 @@ function App() {
             <Products />
           </Route>
         </Switch>
+        <Footer />
       </div>
     </Router>
   );
